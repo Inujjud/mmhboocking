@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مخرج نجد — عرض التحول الرقمي</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Kufam';src:url('Kufam-Regular.ttf') format('truetype')}
+
+:root{
+  --gold:#B8893A;
+  --gold-l:#D4A855;
+  --gold-p:#F5E6C8;
+  --gold-d:#8C6030;
+  --green:#2D4A35;
+  --green-l:#3D6347;
+  --green-p:#E8F0EA;
+  --brown:#5C3D20;
+  --brown-l:#7A5530;
+  --beige:#FAF7F0;
+  --beige2:#F2EDE0;
+  --beige3:#E8DFC8;
+  --white:#FEFCF8;
+  --t1:#2C1F0A;
+  --t2:#5C4020;
+  --t3:#8C6838;
+  --bd:rgba(184,137,58,.14);
+  --bd2:rgba(184,137,58,.07);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--t1);font-family:'Kufam',sans-serif;overflow-x:hidden}
+.mono{font-family:'Space Mono',monospace}
+
+/* NAV */
+nav{
+  position:fixed;top:0;right:0;left:0;z-index:300;
+  height:62px;padding:0 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(254,252,248,.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--bd);
+}
+.nav-brand{display:flex;align-items:center;gap:.7rem}
+.nav-hex{
+  width:36px;height:36px;background:var(--green);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-hex svg{width:14px;height:14px}
+.brand-text{font-size:.95rem;color:var(--t1);line-height:1.2}
+.brand-text small{display:block;font-family:'Space Mono',monospace;font-size:.46rem;color:var(--t3);letter-spacing:.18em;text-transform:uppercase;margin-top:.05rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.8rem;color:var(--t2);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:8rem 3rem 5rem;overflow:hidden;
+}
+#hcv{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero>*:not(#hcv){position:relative;z-index:1}
+.h-tag{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.38em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:up .9s ease .4s forwards}
+.h-title{font-size:clamp(2.5rem,5.5vw,5rem);line-height:1.18;color:var(--t1);margin-bottom:.9rem;opacity:0;animation:up .9s ease .65s forwards;letter-spacing:-.01em}
+.h-title em{color:var(--green);font-style:normal}
+.h-sub{font-size:.97rem;color:var(--t3);margin-bottom:2.5rem;opacity:0;animation:up .9s ease .85s forwards;max-width:520px;line-height:1.75}
+.h-pills{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;opacity:0;animation:up .9s ease 1s forwards}
+.pill{border:1px solid var(--bd);background:rgba(255,255,255,.7);padding:.35rem 1rem;font-size:.78rem;color:var(--t2);border-radius:999px}
+.pill.g{background:var(--green-p);border-color:rgba(45,74,53,.2);color:var(--green)}
+.pill.b{background:var(--beige2);border-color:var(--bd);color:var(--brown)}
+.h-stats{display:flex;gap:5rem;opacity:0;animation:up .9s ease 1.15s forwards;padding-top:2rem;border-top:1px solid var(--bd)}
+.sn{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--gold);display:block;line-height:1}
+.sl{font-size:.72rem;color:var(--t3);margin-top:.25rem;display:block}
+
+/* SECTIONS */
+section{padding:6rem 4rem}
+.sw{max-width:1240px;margin:0 auto}
+.slb{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem}
+.slb::after{content:'';height:1px;width:40px;background:var(--gold);opacity:.35}
+.slb.green{color:var(--green)}
+.slb.green::after{background:var(--green)}
+.slb.brown{color:var(--brown)}
+.slb.brown::after{background:var(--brown)}
+.stitle{font-size:clamp(1.7rem,3vw,2.7rem);color:var(--t1);line-height:1.25;margin-bottom:.8rem;letter-spacing:-.01em}
+.stitle em.g{color:var(--green);font-style:normal}
+.stitle em.gold{color:var(--gold);font-style:normal}
+.stitle em.br{color:var(--brown);font-style:normal}
+.divider{height:1px;background:linear-gradient(to left,transparent,var(--bd),transparent);max-width:1240px;margin:0 auto}
+
+/* ── PLATFORM ── */
+.platform{background:var(--white)}
+
+/* Admin Dashboard Mockup */
+.dash-frame{
+  margin-top:2.5rem;
+  background:white;border:1px solid var(--bd);border-radius:10px;
+  overflow:hidden;box-shadow:0 12px 48px rgba(45,74,53,.08),0 2px 8px rgba(0,0,0,.04);
+}
+.dash-topbar{
+  background:var(--green);height:38px;
+  display:flex;align-items:center;padding:0 1rem;gap:.5rem;
+}
+.dtdot{width:10px;height:10px;border-radius:50%}
+.dt1{background:#ff5f57}.dt2{background:#febc2e}.dt3{background:#28c840}
+.dt-url{flex:1;background:rgba(255,255,255,.1);border-radius:3px;height:20px;margin:0 1rem;display:flex;align-items:center;padding:0 .7rem}
+.dt-url span{font-family:'Space Mono',monospace;font-size:.48rem;color:rgba(255,255,255,.6);letter-spacing:.05em}
+.dt-tag{background:rgba(255,255,255,.15);padding:.15rem .6rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.42rem;color:white;letter-spacing:.08em}
+
+.dash-layout{display:grid;grid-template-columns:190px 1fr;min-height:380px}
+
+.dash-side{background:var(--beige2);border-left:1px solid var(--bd);padding:1rem 0}
+.dsi{
+  padding:.5rem 1rem;font-size:.73rem;color:var(--t2);
+  display:flex;align-items:center;gap:.6rem;cursor:default;
+  transition:all .2s;border-right:2px solid transparent;
+}
+.dsi:hover,.dsi.on{background:var(--green-p);color:var(--green);border-right-color:var(--green)}
+.dsi svg{width:14px;height:14px;opacity:.6;flex-shrink:0}
+
+.dash-main{padding:1.5rem}
+.dm-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.dm-title{font-size:.85rem;font-weight:bold;color:var(--t1)}
+.dm-btn{background:var(--green);color:white;border:none;padding:.35rem .9rem;font-family:'Kufam',sans-serif;font-size:.7rem;border-radius:3px;cursor:default}
+
+.dm-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.2rem}
+.dmc{background:var(--beige);border:1px solid var(--bd);padding:.9rem;border-radius:4px}
+.dmc-n{font-family:'Space Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--green);line-height:1}
+.dmc-l{font-size:.63rem;color:var(--t3);margin-top:.25rem}
+.dmc-bar{height:3px;background:var(--bd);border-radius:2px;margin-top:.5rem;overflow:hidden}
+.dmc-fill{height:100%;background:var(--green);border-radius:2px;animation:fillG 2s ease 1s both}
+@keyframes fillG{from{width:0}to{width:var(--w)}}
+
+.dm-tbl-wrap{background:white;border:1px solid var(--bd);border-radius:4px;overflow:hidden}
+.dm-tbl{width:100%;border-collapse:collapse;font-size:.68rem}
+.dm-tbl th{background:var(--green-p);padding:.45rem .7rem;text-align:right;color:var(--green);font-weight:normal;border-bottom:1px solid rgba(45,74,53,.12);font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.05em}
+.dm-tbl td{padding:.45rem .7rem;border-bottom:1px solid var(--bd2);color:var(--t2)}
+.dm-tbl tr:last-child td{border-bottom:none}
+.dbadge{display:inline-block;padding:.1rem .45rem;border-radius:999px;font-size:.58rem;font-family:'Space Mono',monospace}
+.bg-g{background:#e8f5e9;color:#2e7d32}
+.bg-y{background:#fff8e1;color:#f57f17}
+.bg-r{background:#fce4ec;color:#c62828}
+
+/* Doctor Dashboard */
+.doc-frame{
+  margin-top:2.5rem;
+  background:white;border:1px solid rgba(45,74,53,.15);border-radius:10px;
+  overflow:hidden;box-shadow:0 12px 48px rgba(184,137,58,.07);
+}
+.doc-topbar{background:var(--gold);height:38px;display:flex;align-items:center;padding:0 1rem;gap:.5rem}
+
+.doc-layout{display:grid;grid-template-columns:1fr 1fr;min-height:300px}
+
+.doc-panel{padding:1.5rem;border-left:1px solid var(--bd)}
+.doc-panel:last-child{border-left:none}
+.doc-panel-title{font-size:.78rem;color:var(--t3);font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;color:var(--gold)}
+
+.appt-card{
+  background:var(--beige);border:1px solid var(--bd);border-radius:4px;
+  padding:.8rem 1rem;margin-bottom:.6rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .2s;cursor:default;
+}
+.appt-card:hover{background:var(--gold-p)}
+.appt-info h5{font-size:.78rem;color:var(--t1);margin-bottom:.15rem}
+.appt-info p{font-size:.65rem;color:var(--t3)}
+.appt-time{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--gold);text-align:left}
+.appt-actions{display:flex;gap:.4rem;margin-top:.4rem}
+.appt-btn{border:none;padding:.2rem .5rem;font-family:'Kufam',sans-serif;font-size:.62rem;border-radius:2px;cursor:default}
+.appt-btn.confirm{background:var(--green);color:white}
+.appt-btn.cancel{background:var(--beige3);color:var(--t2)}
+
+.doc-stats{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.ds-card{background:var(--beige);border:1px solid var(--bd);padding:.9rem;border-radius:4px;text-align:center}
+.ds-n{font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;display:block}
+.ds-l{font-size:.65rem;color:var(--t3);margin-top:.2rem;display:block}
+
+/* Patient Booking View */
+.booking-frame{
+  margin-top:2.5rem;
+  background:white;border:1px solid var(--bd);border-radius:10px;
+  overflow:hidden;box-shadow:0 8px 32px rgba(184,137,58,.08);
+}
+.booking-topbar{background:var(--brown);height:38px;display:flex;align-items:center;padding:0 1rem;gap:.5rem}
+
+.booking-layout{display:grid;grid-template-columns:1fr 1fr;min-height:280px}
+.booking-side{padding:1.5rem;border-left:1px solid var(--bd)}
+.booking-side-title{font-size:.78rem;color:var(--t3);font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem;color:var(--brown)}
+
+.doc-cards{display:flex;flex-direction:column;gap:.7rem}
+.doc-card{
+  background:var(--beige);border:1px solid var(--bd);border-radius:6px;
+  padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;
+  transition:all .2s;cursor:default;
+}
+.doc-card:hover,.doc-card.sel{background:var(--beige3);border-color:var(--brown)}
+.doc-avatar{
+  width:38px;height:38px;background:var(--brown);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;color:white;
+}
+.doc-info h5{font-size:.78rem;color:var(--t1)}
+.doc-info p{font-size:.65rem;color:var(--t3)}
+
+.booking-form{padding:1.5rem}
+.booking-form-title{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem;color:var(--brown)}
+.bf-steps{display:flex;flex-direction:column;gap:.8rem}
+.bf-step{display:flex;align-items:flex-start;gap:.8rem}
+.bf-num{
+  width:22px;height:22px;background:var(--brown);color:white;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;flex-shrink:0;margin-top:.05rem;
+}
+.bf-content h5{font-size:.78rem;color:var(--t1);margin-bottom:.3rem}
+.bf-chips{display:flex;gap:.4rem;flex-wrap:wrap}
+.bf-chip{
+  padding:.25rem .7rem;font-size:.68rem;border-radius:999px;
+  border:1px solid var(--bd);color:var(--t2);background:var(--beige);
+  cursor:default;transition:all .2s;
+}
+.bf-chip:hover,.bf-chip.sel{background:var(--brown);color:white;border-color:var(--brown)}
+.bf-confirm{
+  margin-top:1.2rem;background:var(--brown);color:white;border:none;
+  width:100%;padding:.6rem;font-family:'Kufam',sans-serif;font-size:.82rem;
+  border-radius:4px;cursor:default;
+}
+
+/* Platform features */
+.feat-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);margin-top:2.5rem}
+.fc{background:white;padding:1.8rem;transition:background .3s;border-top:3px solid transparent}
+.fc:nth-child(1){border-top-color:var(--green)}
+.fc:nth-child(2){border-top-color:var(--gold)}
+.fc:nth-child(3){border-top-color:var(--brown)}
+.fc:hover{background:var(--beige)}
+.fc-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem;border-radius:4px}
+.fc:nth-child(1) .fc-icon{background:var(--green-p);color:var(--green)}
+.fc:nth-child(2) .fc-icon{background:var(--gold-p);color:var(--gold)}
+.fc:nth-child(3) .fc-icon{background:var(--beige3);color:var(--brown)}
+.fc h4{font-size:.88rem;color:var(--t1);margin-bottom:.5rem}
+.fc p{font-size:.78rem;line-height:1.7;color:var(--t2)}
+
+/* Salla flow */
+.salla-box{margin-top:2.5rem;background:var(--green-p);border:1px solid rgba(45,74,53,.15);border-right:4px solid var(--green);padding:2rem}
+.salla-title{font-size:.9rem;color:var(--green);margin-bottom:1.5rem;font-weight:bold}
+.salla-desc{font-size:.85rem;line-height:1.75;color:var(--t2);margin-bottom:1.8rem}
+.salla-nodes{display:flex;align-items:center;gap:0;overflow-x:auto}
+.sn-node{display:flex;flex-direction:column;align-items:center;flex:1;min-width:100px;position:relative}
+.sn-node:not(:first-child)::before{
+  content:'';position:absolute;top:22px;right:50%;width:100%;height:2px;
+  background:linear-gradient(to left,var(--green),var(--green-p));
+  z-index:0;
+}
+.sn-circle{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;position:relative;z-index:1;
+  box-shadow:0 4px 12px rgba(45,74,53,.2);
+}
+.sn-circle.c1{background:var(--green)}
+.sn-circle.c2{background:var(--gold)}
+.sn-circle.c3{background:var(--brown)}
+.sn-circle.c4{background:var(--green-l)}
+.sn-circle.c5{background:var(--green)}
+.sn-label{font-size:.72rem;color:var(--t2);text-align:center;line-height:1.4;margin-top:.7rem}
+
+/* ── WHATSAPP ── */
+.wa-sec{background:var(--beige2)}
+
+.scenarios-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3rem;
+}
+
+.scenario-card{
+  background:white;border:1px solid var(--bd);border-radius:10px;
+  overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04);
+  display:flex;flex-direction:column;
+}
+
+.sc-header{
+  padding:1rem 1.2rem;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;gap:.7rem;
+}
+.sc-number{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;
+  color:white;flex-shrink:0;
+}
+.sc-header h4{font-size:.85rem;color:var(--t1)}
+.sc-header p{font-size:.7rem;color:var(--t3);margin-top:.1rem}
+
+/* Phone shell */
+.phone-shell{
+  background:var(--t1);border-radius:10px;
+  overflow:hidden;margin:.8rem;flex:1;
+}
+.phone-topbar{
+  background:rgba(255,255,255,.08);padding:.6rem .9rem;
+  display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.p-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.p-name{font-size:.72rem;color:rgba(255,255,255,.9)}
+.p-status{font-size:.55rem;color:rgba(255,255,255,.4)}
+.p-status.on{color:#4caf50}
+
+.phone-msgs{
+  padding:.8rem;min-height:260px;display:flex;flex-direction:column;gap:.5rem;
+  background:var(--beige);
+}
+
+.pmsg{display:flex;flex-direction:column}
+.pmsg.u{align-items:flex-start}
+.pmsg.b{align-items:flex-end}
+.pmsg-who{font-family:'Space Mono',monospace;font-size:.42rem;color:var(--t3);margin-bottom:.15rem}
+.pbubble{
+  max-width:82%;padding:.5rem .8rem;font-size:.73rem;line-height:1.45;
+  border-radius:10px;
+}
+.pmsg.u .pbubble{background:white;color:var(--t2);border:1px solid var(--bd);border-top-right-radius:2px}
+.pmsg.b .pbubble{color:white;border-top-left-radius:2px}
+.pmsg.sys .pbubble{
+  background:rgba(184,137,58,.08);color:var(--gold-d);
+  border:1px solid rgba(184,137,58,.2);font-size:.68rem;
+  text-align:center;border-radius:8px;max-width:100%;width:100%;
+}
+
+/* Color per scenario */
+.sc1 .pmsg.b .pbubble{background:var(--green)}
+.sc2 .pmsg.b .pbubble{background:var(--gold)}
+.sc3 .pmsg.b .pbubble{background:var(--brown)}
+.sc1 .sc-number{background:var(--green)}
+.sc2 .sc-number{background:var(--gold)}
+.sc3 .sc-number{background:var(--brown)}
+.sc1 .sc-header{border-bottom-color:rgba(45,74,53,.12)}
+.sc2 .sc-header{border-bottom-color:rgba(184,137,58,.12)}
+.sc3 .sc-header{border-bottom-color:rgba(92,61,32,.12)}
+
+/* Handoff indicator */
+.handoff-bar{
+  background:var(--beige3);border-top:1px solid var(--bd);
+  padding:.5rem .9rem;display:flex;align-items:center;gap:.5rem;
+}
+.hdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:pulse 2s ease infinite}
+.hdot.g{background:var(--green)}
+.hdot.gold{background:var(--gold)}
+.hdot.br{background:var(--brown)}
+.hbar-txt{font-size:.65rem;color:var(--t3)}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── CTA ── */
+.cta-sec{
+  background:var(--green);padding:6rem 4rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-sec::before{
+  content:'NJDEXIT';font-family:'Space Mono',monospace;font-weight:700;
+  font-size:18vw;color:rgba(255,255,255,.03);
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;pointer-events:none;letter-spacing:-.02em;
+}
+.cta-label{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.38em;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:1.5rem;position:relative}
+.cta-title{font-size:clamp(1.8rem,3.5vw,3rem);color:white;margin-bottom:1rem;position:relative;line-height:1.25}
+.cta-sub{font-size:.92rem;color:rgba(255,255,255,.6);margin-bottom:3rem;position:relative;max-width:540px;margin-inline:auto;line-height:1.75}
+.cta-btn{
+  display:inline-block;background:white;color:var(--green);
+  padding:1rem 3rem;font-family:'Kufam',sans-serif;font-size:.9rem;
+  text-decoration:none;border-radius:2px;transition:all .3s;position:relative;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+.cta-btn:hover{background:var(--gold-p);color:var(--green-l);transform:translateY(-2px)}
+.cta-note{margin-top:1.5rem;font-size:.75rem;color:rgba(255,255,255,.35);position:relative;font-family:'Space Mono',monospace;letter-spacing:.05em}
+
+.footer-bar{background:var(--t1);padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.footer-bar p{font-family:'Space Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.3);letter-spacing:.1em}
+
+/* ── TERMS ── */
+.terms-sec{background:var(--beige2)}
+.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);border:1px solid var(--bd);margin-top:3rem}
+.term{background:white;padding:1.8rem;transition:background .3s;border-top:2px solid transparent}
+.term:nth-child(odd){border-top-color:var(--green)}
+.term:nth-child(even){border-top-color:var(--gold)}
+.term:hover{background:var(--beige)}
+.term-n{font-family:'Space Mono',monospace;font-size:.5rem;color:var(--t3);letter-spacing:.18em;margin-bottom:.5rem}
+.term h4{font-size:.9rem;color:var(--t1);margin-bottom:.5rem}
+.term p{font-size:.8rem;line-height:1.75;color:var(--t2)}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.r{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.r.v{opacity:1;transform:translateY(0)}
+
+/* Floating animation for mockup cards */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+@media(max-width:1000px){
+  nav{padding:0 1.2rem}.nav-links{display:none}
+  section{padding:4rem 1.2rem}
+  .hero{padding:6rem 1.2rem 4rem}
+  .scenarios-grid{grid-template-columns:1fr}
+  .feat-3{grid-template-columns:1fr}
+  .terms-grid{grid-template-columns:1fr}
+  .booking-layout,.doc-layout,.dash-layout{grid-template-columns:1fr}
+  .h-stats{gap:2.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-hex">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" stroke="white" stroke-width="1.2"/><circle cx="7" cy="7" r="2" fill="white" opacity=".8"/></svg>
+    </div>
+    <div class="brand-text">مخرج نجد<small>NJDEXIT · DIGITAL TRANSFORMATION</small></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#platform">منصة الحجز</a></li>
+    <li><a href="#whatsapp">واتساب AI</a></li>
+    <li><a href="#terms">الشروط</a></li>
+    <li><a href="#cta">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hcv"></canvas>
+  <p class="h-tag">مستشفى المدينة الطبي · عرض التحول الرقمي</p>
+  <h1 class="h-title">منظومة رقمية متكاملة<br>لإدارة <em>عيادات المستشفى</em></h1>
+  <p class="h-sub">حجز ذكي · بوت واتساب بالذكاء الاصطناعي · لوحات تحكم متخصصة لكل مستوى</p>
+  <div class="h-pills">
+    <span class="pill g">لوحة تحكم الإدارة</span>
+    <span class="pill g">لوحة الطبيب</span>
+    <span class="pill b">واجهة الحجز للمريض</span>
+    <span class="pill">بوت واتساب AI</span>
+    <span class="pill b">ربط سلة الدفع</span>
+  </div>
+  <div class="h-stats">
+    <div><span class="sn">3</span><span class="sl">أشهر اختبار</span></div>
+    <div><span class="sn">3</span><span class="sl">لوحات تحكم</span></div>
+    <div><span class="sn">24/7</span><span class="sl">تغطية ذكية</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLATFORM -->
+<section class="platform" id="platform">
+  <div class="sw">
+    <div class="slb green">المنتج الأول</div>
+    <h2 class="stitle r">منصة الحجز الرقمي<br><em class="g">ثلاث لوحات تحكم متخصصة</em></h2>
+
+    <!-- 1. Admin Dashboard -->
+    <div style="margin-top:3rem" class="r">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+        <div style="width:8px;height:8px;background:var(--green);border-radius:50%"></div>
+        <span style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--green);text-transform:uppercase">لوحة الإدارة — Super Admin</span>
+      </div>
+      <div class="dash-frame" style="animation:float 6s ease-in-out infinite">
+        <div class="dash-topbar">
+          <div class="dtdot dt1"></div><div class="dtdot dt2"></div><div class="dtdot dt3"></div>
+          <div class="dt-url"><span>bookingmmh.vercel.app/admin</span></div>
+          <div class="dt-tag">SUPER ADMIN</div>
+        </div>
+        <div class="dash-layout">
+          <div class="dash-side">
+            <div class="dsi on">
+              <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+              الرئيسية
+            </div>
+            <div class="dsi">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+              الأطباء
+            </div>
+            <div class="dsi">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><rect x="2" y="3" width="12" height="11" rx="1"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>
+              الحجوزات
+            </div>
+            <div class="dsi">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+              ساعات العمل
+            </div>
+            <div class="dsi">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M2 12l4-4 3 3 5-6"/></svg>
+              الإحصائيات
+            </div>
+            <div class="dsi" style="margin-top:1.5rem;border-top:1px solid var(--bd);padding-top:1rem">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg>
+              الإعدادات
+            </div>
+          </div>
+          <div class="dash-main">
+            <div class="dm-hdr">
+              <div class="dm-title">لوحة التحكم — مستشفى المدينة الطبي</div>
+              <button class="dm-btn">+ إضافة طبيب</button>
+            </div>
+            <div class="dm-cards">
+              <div class="dmc"><div class="dmc-n">47</div><div class="dmc-l">حجز هذا الأسبوع</div><div class="dmc-bar"><div class="dmc-fill" style="--w:78%"></div></div></div>
+              <div class="dmc"><div class="dmc-n">3</div><div class="dmc-l">أطباء نشطون</div><div class="dmc-bar"><div class="dmc-fill" style="--w:100%"></div></div></div>
+              <div class="dmc"><div class="dmc-n">12</div><div class="dmc-l">موعد اليوم</div><div class="dmc-bar"><div class="dmc-fill" style="--w:55%"></div></div></div>
+              <div class="dmc"><div class="dmc-n">98%</div><div class="dmc-l">نسبة التأكيد</div><div class="dmc-bar"><div class="dmc-fill" style="--w:98%"></div></div></div>
+            </div>
+            <div class="dm-tbl-wrap">
+              <table class="dm-tbl">
+                <thead><tr><th>المريضة</th><th>الطبيب</th><th>الخدمة</th><th>الوقت</th><th>الحالة</th></tr></thead>
+                <tbody>
+                  <tr><td>سارة المطيري</td><td>د. نورا راشد</td><td>فيلر ٣ مل</td><td class="mono" style="font-size:.62rem">6:00 م</td><td><span class="dbadge bg-g">مؤكد</span></td></tr>
+                  <tr><td>نوف العتيبي</td><td>د. نورا راشد</td><td>بوتوكس كامل</td><td class="mono" style="font-size:.62rem">7:30 م</td><td><span class="dbadge bg-y">انتظار</span></td></tr>
+                  <tr><td>ريم الحربي</td><td>د. نورا راشد</td><td>تنظيف بشرة</td><td class="mono" style="font-size:.62rem">9:00 م</td><td><span class="dbadge bg-g">مؤكد</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Doctor Dashboard -->
+    <div style="margin-top:3rem" class="r">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+        <div style="width:8px;height:8px;background:var(--gold);border-radius:50%"></div>
+        <span style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase">لوحة الطبيب</span>
+      </div>
+      <div class="doc-frame" style="animation:float 6s ease-in-out 2s infinite">
+        <div class="doc-topbar">
+          <div class="dtdot dt1"></div><div class="dtdot dt2"></div><div class="dtdot dt3"></div>
+          <div class="dt-url" style="background:rgba(255,255,255,.15)"><span>bookingmmh.vercel.app/dr.noura</span></div>
+          <div class="dt-tag" style="background:rgba(255,255,255,.15)">DOCTOR VIEW</div>
+        </div>
+        <div class="doc-layout">
+          <div class="doc-panel">
+            <div class="doc-panel-title">مواعيد اليوم</div>
+            <div class="appt-card">
+              <div class="appt-info"><h5>سارة المطيري</h5><p>فيلر ٣ مل جوفيديرم</p><div class="appt-actions"><button class="appt-btn confirm">تأكيد</button><button class="appt-btn cancel">إلغاء</button></div></div>
+              <div class="appt-time">6:00<br><span style="font-size:.55rem;color:var(--t3)">مساءً</span></div>
+            </div>
+            <div class="appt-card">
+              <div class="appt-info"><h5>نوف العتيبي</h5><p>بوتوكس كامل الوجه</p><div class="appt-actions"><button class="appt-btn confirm">تأكيد</button><button class="appt-btn cancel">إلغاء</button></div></div>
+              <div class="appt-time">7:30<br><span style="font-size:.55rem;color:var(--t3)">مساءً</span></div>
+            </div>
+            <div class="appt-card">
+              <div class="appt-info"><h5>ريم الحربي</h5><p>تنظيف بشرة عميق</p><div class="appt-actions"><button class="appt-btn confirm">تأكيد</button><button class="appt-btn cancel">إلغاء</button></div></div>
+              <div class="appt-time">9:00<br><span style="font-size:.55rem;color:var(--t3)">مساءً</span></div>
+            </div>
+          </div>
+          <div class="doc-panel" style="border-left:none">
+            <div class="doc-panel-title">إحصائيات العيادة</div>
+            <div class="doc-stats">
+              <div class="ds-card"><span class="ds-n" style="color:var(--gold)">47</span><span class="ds-l">حجز هذا الشهر</span></div>
+              <div class="ds-card"><span class="ds-n" style="color:var(--green)">98%</span><span class="ds-l">نسبة التأكيد</span></div>
+              <div class="ds-card"><span class="ds-n" style="color:var(--brown)">12</span><span class="ds-l">موعد اليوم</span></div>
+              <div class="ds-card"><span class="ds-n" style="color:var(--gold-d)">4.9</span><span class="ds-l">تقييم العيادة</span></div>
+            </div>
+            <div style="margin-top:1.2rem;padding:1rem;background:var(--beige);border:1px solid var(--bd);border-radius:4px">
+              <div style="font-size:.65rem;color:var(--t3);margin-bottom:.5rem">رابط الحجز الخاص بك</div>
+              <div style="font-family:'Space Mono',monospace;font-size:.62rem;color:var(--gold);background:white;padding:.4rem .7rem;border:1px solid var(--bd);border-radius:3px">bookingmmh.vercel.app/dr.noura</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Patient Booking -->
+    <div style="margin-top:3rem" class="r">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+        <div style="width:8px;height:8px;background:var(--brown);border-radius:50%"></div>
+        <span style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--brown);text-transform:uppercase">واجهة الحجز — المريض</span>
+      </div>
+      <div class="booking-frame" style="animation:float 6s ease-in-out 4s infinite">
+        <div class="booking-topbar">
+          <div class="dtdot dt1"></div><div class="dtdot dt2"></div><div class="dtdot dt3"></div>
+          <div class="dt-url" style="background:rgba(255,255,255,.12)"><span>bookingmmh.vercel.app</span></div>
+          <div class="dt-tag" style="background:rgba(255,255,255,.12)">PATIENT VIEW</div>
+        </div>
+        <div class="booking-layout">
+          <div class="booking-side">
+            <div class="booking-side-title">اختاري طبيبتك</div>
+            <div class="doc-cards">
+              <div class="doc-card sel">
+                <div class="doc-avatar">👩‍⚕️</div>
+                <div class="doc-info"><h5>د. نورا راشد</h5><p>جلدية وتجميل</p></div>
+                <div style="margin-right:auto;width:8px;height:8px;background:var(--brown);border-radius:50%"></div>
+              </div>
+              <div class="doc-card">
+                <div class="doc-avatar" style="background:var(--green)">👩‍⚕️</div>
+                <div class="doc-info"><h5>د. أخرى</h5><p>قسم آخر</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="booking-form">
+            <div class="booking-form-title">تفاصيل الموعد</div>
+            <div class="bf-steps">
+              <div class="bf-step">
+                <div class="bf-num" style="background:var(--brown)">1</div>
+                <div class="bf-content">
+                  <h5>نوع الخدمة</h5>
+                  <div class="bf-chips">
+                    <div class="bf-chip sel">فيلر</div>
+                    <div class="bf-chip">بوتوكس</div>
+                    <div class="bf-chip">بيكو</div>
+                    <div class="bf-chip">تنظيف</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bf-step">
+                <div class="bf-num" style="background:var(--gold)">2</div>
+                <div class="bf-content">
+                  <h5>اختاري التاريخ</h5>
+                  <div class="bf-chips">
+                    <div class="bf-chip">السبت ٥</div>
+                    <div class="bf-chip sel">الأحد ٦</div>
+                    <div class="bf-chip">الاثنين ٧</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bf-step">
+                <div class="bf-num" style="background:var(--green)">3</div>
+                <div class="bf-content">
+                  <h5>الوقت المتاح</h5>
+                  <div class="bf-chips">
+                    <div class="bf-chip">5:00 م</div>
+                    <div class="bf-chip sel">6:00 م</div>
+                    <div class="bf-chip">7:30 م</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="bf-confirm">تأكيد الحجز</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="feat-3 r">
+      <div class="fc"><div class="fc-icon">◈</div><h4>تحكم كامل بالأطباء</h4><p>الإدارة تضيف وتحذف الأطباء وتمنحهم الصلاحيات أو تسحبها فوراً — بدون تدخل تقني.</p></div>
+      <div class="fc"><div class="fc-icon">⏱</div><h4>إدارة ساعات العمل</h4><p>تحديد أوقات استقبال الحجوزات لكل طبيب وإيقافها متى شاءت الإدارة بشكل فوري.</p></div>
+      <div class="fc"><div class="fc-icon">📊</div><h4>إحصائيات شاملة</h4><p>تقارير مفصلة لكل عيادة — عدد الحجوزات، نسبة التأكيد، والأداء الشهري.</p></div>
+    </div>
+
+    <!-- Salla -->
+    <div class="salla-box r">
+      <div class="salla-title">ربط سلة الدفع — كيف يعمل؟</div>
+      <div class="salla-desc">عند عدم وجود فاتورة أو ملف سابق، يختار المريض طبيبه ثم يُوجَّه تلقائياً لمتجر سلة الإلكتروني الخاص بالمستشفى لإتمام الدفع وتأكيد الموعد.</div>
+      <div class="salla-nodes">
+        <div class="sn-node"><div class="sn-circle c1">🏥</div><div class="sn-label">يزور الموقع<br>ويختار طبيبه</div></div>
+        <div class="sn-node"><div class="sn-circle c2">❓</div><div class="sn-label">لا يملك<br>فاتورة</div></div>
+        <div class="sn-node"><div class="sn-circle c3">🛒</div><div class="sn-label">يُحوَّل لمتجر<br>سلة المستشفى</div></div>
+        <div class="sn-node"><div class="sn-circle c4">💳</div><div class="sn-label">يدفع ويحدد<br>الموعد</div></div>
+        <div class="sn-node"><div class="sn-circle c5">✅</div><div class="sn-label">تأكيد تلقائي<br>للطرفين</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHATSAPP -->
+<section class="wa-sec" id="whatsapp">
+  <div class="sw">
+    <div class="slb gold">المنتج الثاني</div>
+    <h2 class="stitle r">بوت واتساب بالذكاء الاصطناعي<br><em class="gold">ثلاثة سيناريوهات حقيقية</em></h2>
+    <p style="font-size:.9rem;color:var(--t2);margin-top:.8rem;line-height:1.75;max-width:680px" class="r">كل سيناريو يمثل حالة فعلية يواجهها البوت يومياً — من الحجز البسيط إلى السؤال التقني إلى التصعيد للطبيبة.</p>
+
+    <div class="scenarios-grid r">
+
+      <!-- SCENARIO 1 -->
+      <div class="scenario-card sc1">
+        <div class="sc-header">
+          <div class="sc-number">01</div>
+          <div><h4>حجز موعد مباشر</h4><p>المريضة تطلب حجز موعد</p></div>
+        </div>
+        <div class="phone-shell">
+          <div class="phone-topbar">
+            <div class="p-avatar">🌸</div>
+            <div><div class="p-name">نور — مساعدة العيادة</div><div class="p-status on">● متصل الآن</div></div>
+          </div>
+          <div class="phone-msgs" id="chat0"></div>
+        </div>
+        <div class="handoff-bar">
+          <div class="hdot g"></div>
+          <span class="hbar-txt">البوت يرسل رابط الحجز مباشرة بسؤال واحد فقط</span>
+        </div>
+      </div>
+
+      <!-- SCENARIO 2 -->
+      <div class="scenario-card sc2">
+        <div class="sc-header">
+          <div class="sc-number">02</div>
+          <div><h4>استفسار عن السعر</h4><p>المريضة تسأل عن تكلفة خدمة</p></div>
+        </div>
+        <div class="phone-shell">
+          <div class="phone-topbar">
+            <div class="p-avatar" style="background:var(--gold)">🌸</div>
+            <div><div class="p-name">نور — مساعدة العيادة</div><div class="p-status on">● متصل الآن</div></div>
+          </div>
+          <div class="phone-msgs" id="chat1"></div>
+        </div>
+        <div class="handoff-bar">
+          <div class="hdot gold"></div>
+          <span class="hbar-txt">سؤالان فقط ← سعر واحد محدد ← تنبيه ما بعد الجلسة</span>
+        </div>
+      </div>
+
+      <!-- SCENARIO 3 -->
+      <div class="scenario-card sc3">
+        <div class="sc-header">
+          <div class="sc-number">03</div>
+          <div><h4>تصعيد للدكتورة</h4><p>سؤال طبي متخصص — Handoff</p></div>
+        </div>
+        <div class="phone-shell">
+          <div class="phone-topbar">
+            <div class="p-avatar" style="background:var(--brown)">🌸</div>
+            <div><div class="p-name">نور — مساعدة العيادة</div><div class="p-status on">● متصل الآن</div></div>
+          </div>
+          <div class="phone-msgs" id="chat2"></div>
+        </div>
+        <div class="handoff-bar">
+          <div class="hdot br"></div>
+          <span class="hbar-txt">البوت يتوقف ← الدكتورة تستلم إشعاراً ← تتولى المحادثة</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TERMS -->
+<section class="terms-sec" id="terms">
+  <div class="sw">
+    <div class="slb brown">الضمانات والشروط</div>
+    <h2 class="stitle r">حماية <em class="br">للطرفين</em></h2>
+    <div class="terms-grid r">
+      <div class="term"><div class="term-n">01</div><h4>النقل مشروط بالسداد الكامل</h4><p>لن يتم نقل النظام — بياناته وكوده وسيرفره — إلا بعد انتهاء فترة الاختبار واستلام المبلغ المتفق عليه كاملاً.</p></div>
+      <div class="term"><div class="term-n">02</div><h4>صلاحيات الأطباء بيد الإدارة</h4><p>الإدارة تملك صلاحية كاملة لمنح أي طبيب صلاحيات الحجز وتحديد ساعات عمله أو سحبها فوراً بدون تدخل تقني.</p></div>
+      <div class="term"><div class="term-n">03</div><h4>السيرفر السحابي — الخيار الأمثل</h4><p>يُوصى بنقل النظام إلى سيرفر سحابي (AWS أو Google Cloud) باسم المستشفى لضمان الأمان والمرونة والتوسع.</p></div>
+      <div class="term"><div class="term-n">04</div><h4>الدعم التقني طوال فترة الاختبار</h4><p>دعم تقني كامل طوال الثلاثة أشهر. أي تطوير يطلبه المستشفى يُدرج في خطة التطوير ضمن العقد.</p></div>
+      <div class="term"><div class="term-n">05</div><h4>تقييم التكامل مع النظام الحالي</h4><p>يتم في الشهر الأول تقييم إمكانية التكامل مع النظام الطبي الحالي وتقديم تقرير بالخيارات المتاحة.</p></div>
+      <div class="term"><div class="term-n">06</div><h4>الاشتراك الشهري المستمر</h4><p>بعد التسليم الكامل يُتاح الاشتراك الشهري لإدارة البوت وصيانته وتحديثه. تفاصيله تُحدد في العقد النهائي.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="cta">
+  <div class="cta-label">مخرج نجد — مستشفى المدينة الطبي</div>
+  <h2 class="cta-title">نرحب بمناقشة تفاصيل<br>هذا العرض مع إدارة المستشفى</h2>
+  <p class="cta-sub">يُعدّ هذا العرض خطوةً أولى نحو شراكة استراتيجية تُسهم في تطوير منظومة الخدمات الصحية الرقمية بمستشفى المدينة الطبي.</p>
+  <a href="#platform" class="cta-btn">الاطلاع على تفاصيل المنظومة</a>
+  <div class="cta-note">للتواصل المباشر — مخرج نجد للحلول الرقمية</div>
+</section>
+
+<div class="footer-bar">
+  <p>© 2025 مخرج نجد — جميع الحقوق محفوظة</p>
+  <p style="color:rgba(255,255,255,.2)">NJDEXIT · DIGITAL TRANSFORMATION</p>
+</div>
+
+<script>
+// HERO CANVAS
+const cv=document.getElementById('hcv'),cx=cv.getContext('2d');
+function rsz(){cv.width=cv.parentElement.offsetWidth;cv.height=cv.parentElement.offsetHeight}
+rsz();window.addEventListener('resize',rsz);
+const wv=[
+  {y:.55,a:.08,f:.006,p:0,sp:.0025,op:.04,c:'184,137,58'},
+  {y:.65,a:.07,f:.007,p:1.5,sp:.002,op:.07,c:'45,74,53'},
+  {y:.75,a:.06,f:.009,p:2.5,sp:.003,op:.1,c:'92,61,32'},
+  {y:.84,a:.05,f:.007,p:.8,sp:.0018,op:.13,c:'184,137,58'},
+  {y:.93,a:.04,f:.011,p:3.2,sp:.0022,op:.18,c:'45,74,53'},
+];
+let t=0;
+function drawBg(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  const bg=cx.createLinearGradient(0,0,0,cv.height);
+  bg.addColorStop(0,'rgba(252,248,240,0)');
+  bg.addColorStop(1,'rgba(232,220,195,.18)');
+  cx.fillStyle=bg;cx.fillRect(0,0,cv.width,cv.height);
+  wv.forEach(w=>{
+    const by=cv.height*w.y,amp=cv.height*w.a;
+    cx.beginPath();cx.moveTo(0,cv.height);
+    for(let x=0;x<=cv.width;x+=2){
+      const y=by+Math.sin(x*w.f+w.p+t*w.sp)*amp+Math.cos(x*w.f*.5+w.p*.7+t*w.sp*.7)*amp*.3;
+      cx.lineTo(x,y);
+    }
+    cx.lineTo(cv.width,cv.height);cx.closePath();
+    const g=cx.createLinearGradient(0,by-amp,0,cv.height);
+    g.addColorStop(0,`rgba(${w.c},${w.op*.4})`);
+    g.addColorStop(1,`rgba(${w.c},${w.op})`);
+    cx.fillStyle=g;cx.fill();
+  });
+  t++;requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// CHAT DATA
+const chats=[
+  [
+    {t:'u',who:'المريضة',m:'السلام عليكم، أقدر أحجز موعد مع الدكتورة نورا اليوم الساعة ٦م؟'},
+    {t:'b',who:'نور',m:'وعليكم السلام 🌸\nهل عندك فاتورة أو ملف سابق في مستشفى المدينة الطبي؟'},
+    {t:'u',who:'المريضة',m:'نعم، عندي فاتورة'},
+    {t:'b',who:'نور',m:'ممتاز! احجزي مباشرة:\n🔗 bookingmmh.vercel.app\n\nللمتابعة مع الدكتورة:\n👻 سناب الدكتورة نورا'},
+  ],
+  [
+    {t:'u',who:'المريضة',m:'كم سعر الفيلر عند الدكتورة؟'},
+    {t:'b',who:'نور',m:'أي نوع فيلر تودين؟'},
+    {t:'u',who:'المريضة',m:'جوفيديرم، ٣ مل'},
+    {t:'b',who:'نور',m:'٣ مل جوفيديرم: 2,850 ريال ✨\n\n⚠️ بعد الفيلر ممنوع الشرب الحار لـ٢٤ ساعة\n\nهل تودين الحجز؟'},
+  ],
+  [
+    {t:'u',who:'المريضة',m:'عندي تورم بعد جلسة الفيلر من أسبوع، طبيعي؟'},
+    {t:'b',who:'نور',m:'أفهم قلقك 💙\nهذا السؤال يحتاج رأي الدكتورة مباشرة.'},
+    {t:'sys',m:'🔄 جاري التحويل للدكتورة نورا...'},
+    {t:'b',who:'نور',m:'تم إشعار الدكتورة نورا.\nستتواصل معك قريباً على هذا الرقم 💙'},
+    {t:'sys',m:'✅ Handoff مفعّل — البوت توقف'},
+  ],
+];
+
+function buildChat(idx){
+  const el=document.getElementById('chat'+idx);
+  if(!el||el.dataset.built)return;
+  el.dataset.built='1';
+  let delay=400;
+  chats[idx].forEach(m=>{
+    setTimeout(()=>{
+      const d=document.createElement('div');
+      if(m.t==='sys'){
+        d.className='pmsg sys';
+        d.innerHTML=`<div class="pbubble">${m.m.replace(/\n/g,'<br>')}</div>`;
+      } else {
+        d.className=`pmsg ${m.t}`;
+        d.innerHTML=`<div class="pmsg-who">${m.who||''}</div><div class="pbubble">${m.m.replace(/\n/g,'<br>')}</div>`;
+      }
+      d.style.cssText='opacity:0;transform:translateY(6px);transition:all .35s ease';
+      el.appendChild(d);
+      setTimeout(()=>{d.style.opacity='1';d.style.transform='translateY(0)'},20);
+      el.scrollTop=el.scrollHeight;
+    },delay);
+    delay+=m.t==='b'?1000:700;
+  });
+}
+
+// SCROLL REVEAL + auto-build chats when visible
+const obs=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('v'),i*70);
+      // build chats when section visible
+      if(e.target.id==='chat0')buildChat(0);
+      if(e.target.id==='chat1')buildChat(1);
+      if(e.target.id==='chat2')buildChat(2);
+    }
+  });
+},{threshold:.07});
+document.querySelectorAll('.r').forEach(r=>obs.observe(r));
+['chat0','chat1','chat2'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)obs.observe(el);
+});
+
+// Trigger all 3 chats after short delay
+setTimeout(()=>{buildChat(0);buildChat(1);buildChat(2)},1200);
+</script>
+</body>
+</html>
